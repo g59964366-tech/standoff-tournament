@@ -1,1 +1,52 @@
-S0226
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация на турнир</title>
+    <style>
+        body { background: #1a1a1a; color: #fff; font-family: 'Arial', sans-serif; text-align: center; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; background: #2a2a2a; padding: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(0,255,204,0.1); }
+        h1 { color: #00ffcc; }
+        p { color: #aaa; }
+        input { padding: 12px; width: 80%; border: none; border-radius: 5px; font-size: 16px; margin-bottom: 15px; }
+        button { padding: 12px 30px; background: #00ffcc; color: #000; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #00ccaa; transform: scale(1.05); }
+        .msg { color: #00ffcc; margin-top: 15px; font-weight: bold; }
+        .rules { margin-top: 20px; font-size: 14px; color: #888; text-align: left; background: #1a1a1a; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏆 Регистрация на турнир</h1>
+        <p>Турнир по Standoff 2</p>
+        <input type="text" id="nick" placeholder="Введи свой ник в Standoff 2">
+        <br>
+        <button onclick="register()">Зарегистрироваться</button>
+        <div class="msg" id="message"></div>
+        
+        <!-- Блок для правил (если захочешь написать их прямо здесь) -->
+        <div class="rules">
+            <p><strong>Правила и призовой фонд:</strong> уточняй в Telegram-канале.</p>
+        </div>
+    </div>
+
+    <script>
+        function register() {
+            const nick = document.getElementById('nick').value.trim();
+            if (nick === "") return alert("Введи ник!");
+            
+            let players = JSON.parse(localStorage.getItem('standoff_players') || "[]");
+            if (players.includes(nick)) {
+                document.getElementById('message').innerText = "Этот ник уже зарегистрирован!";
+                return;
+            }
+            players.push(nick);
+            localStorage.setItem('standoff_players', JSON.stringify(players));
+            
+            document.getElementById('message').innerText = "✅ Ты зарегистрирован! Ник: " + nick;
+            document.getElementById('nick').value = "";
+        }
+    </script>
+</body>
+</html>
